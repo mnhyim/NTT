@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalOf
+import com.mnhyim.nexmediatechtest.ui.feature.home.Home
 import com.mnhyim.nexmediatechtest.ui.theme.NexMediaTechTestTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,9 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NexMediaTechTestTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier.padding(innerPadding)) {
-                        Text("MainActivity")
-                    }
+                    Home(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
