@@ -1,23 +1,34 @@
 package com.mnhyim.nexmediatechtest.ui.feature.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.core.provider.FontsContractCompat.Columns
+import com.mnhyim.nexmediatechtest.ui.navigation.Routes
 
 @Composable
 fun Home(
+    onNavigate: (Routes) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    HomeScreen(modifier = modifier)
+    HomeScreen(
+        onNavigate = onNavigate,
+        modifier = modifier
+    )
 }
 
 @Composable
 private fun HomeScreen(
+    onNavigate: (Routes) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
-        Text("Home Screen")
+    Scaffold { innerPadding ->
+        Column(
+            modifier = modifier.padding(innerPadding)
+        ) {
+            Text("Home Screen")
+        }
     }
 }
