@@ -7,6 +7,7 @@ interface ProductRepository {
 
     fun getAllProducts(): Flow<List<Product>>
     fun getAllFavoriteProducts(): Flow<List<Product>>
+    suspend fun getProductById(id: Long): Product
     suspend fun insertProduct(product: Product)
     suspend fun updateProduct(product: Product)
     suspend fun deleteProduct(product: Product)

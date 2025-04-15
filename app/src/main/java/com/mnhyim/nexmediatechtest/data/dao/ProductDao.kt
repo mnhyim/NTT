@@ -16,6 +16,9 @@ interface ProductDao {
     @Query("SELECT * FROM product WHERE product_isFavorite == true")
     fun getAllFavoriteItems(): Flow<List<ProductEntity>>
 
+    @Query("SELECT * FROM product WHERE product_id = :id")
+    suspend fun getItemById(id: Long): ProductEntity
+
     @Insert
     suspend fun insertItem(item: ProductEntity)
 
