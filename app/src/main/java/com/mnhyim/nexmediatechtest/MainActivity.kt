@@ -12,7 +12,9 @@ import androidx.navigation.compose.rememberNavController
 import com.mnhyim.nexmediatechtest.ui.components.BottomNavigation
 import com.mnhyim.nexmediatechtest.ui.navigation.MainNavHost
 import com.mnhyim.nexmediatechtest.ui.theme.NexMediaTechTestTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
