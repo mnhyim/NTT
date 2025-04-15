@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class ProductRepositoryImpl @Inject constructor(
     private val dao: ProductDao
-): ProductRepository {
+) : ProductRepository {
 
     override fun getAllProducts(): Flow<List<Product>> {
         return dao.getAllItems().map { products ->

@@ -19,6 +19,6 @@ data class ProductEntity(
     @ColumnInfo(name = "item_stock")
     val stock: Int,
 
-    @ColumnInfo(name= "is_favorite")
+    @ColumnInfo(name = "is_favorite")
     val isFavorite: Boolean
 )

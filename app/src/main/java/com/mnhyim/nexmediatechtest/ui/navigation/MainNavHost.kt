@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.mnhyim.nexmediatechtest.ui.feature.detail.Detail
 import com.mnhyim.nexmediatechtest.ui.feature.favorites.Favorites
 import com.mnhyim.nexmediatechtest.ui.feature.home.Home
+import com.mnhyim.nexmediatechtest.ui.feature.settings.Settings
 
 @Composable
 fun MainNavHost(
@@ -31,6 +32,11 @@ fun MainNavHost(
             )
         }
 
+        composable<Routes.Settings> {
+            Settings(
+                onNavigate = { navController.navigate(it) }
+            )
+        }
         composable<Routes.Detail> {
             Detail(
                 onNavigate = { navController.navigate(it) }
