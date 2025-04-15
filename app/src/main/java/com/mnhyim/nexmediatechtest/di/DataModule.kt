@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.mnhyim.nexmediatechtest.data.ProductDatabase
 import com.mnhyim.nexmediatechtest.data.dao.ProductDao
+import com.mnhyim.nexmediatechtest.data.repository.ProductRepositoryImpl
+import com.mnhyim.nexmediatechtest.domain.repository.ProductRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,5 +35,13 @@ object DataModule {
         database: ProductDatabase
     ): ProductDao {
         return database.productDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductRepository(
+        dao: ProductDao
+    ): ProductRepository {
+        return ProductRepositoryImpl(dao)
     }
 }

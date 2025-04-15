@@ -31,10 +31,13 @@ fun Home(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
     val products by viewModel.products.collectAsStateWithLifecycle()
 
     HomeScreen(
         products = products,
+        searchQuery = searchQuery,
+        onSearchQueryChanged = viewModel::onSearchQueryChanged,
         onNavigate = onNavigate,
         onFavorite = { viewModel.favoriteItem(it) },
         modifier = modifier
@@ -44,6 +47,8 @@ fun Home(
 @Composable
 private fun HomeScreen(
     products: List<Product>,
+    searchQuery: String,
+    onSearchQueryChanged: (String) -> Unit,
     onNavigate: (Routes) -> Unit,
     onFavorite: (Product) -> Unit,
     modifier: Modifier = Modifier
@@ -52,9 +57,10 @@ private fun HomeScreen(
         modifier = modifier
     ) {
         OutlinedTextField(
-            value = "",
-            onValueChange = { },
-            shape = RoundedCornerShape(16.dp),
+            value = searchQuery,
+            onValueChange = onSearchQueryChanged,
+            placeholder = { Text("Search products...") },
+            shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp,8.dp)

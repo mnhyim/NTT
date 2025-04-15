@@ -5,48 +5,52 @@ import androidx.lifecycle.viewModelScope
 import com.mnhyim.nexmediatechtest.data.dao.ProductDao
 import com.mnhyim.nexmediatechtest.data.entity.ProductEntity
 import com.mnhyim.nexmediatechtest.domain.model.Product
+import com.mnhyim.nexmediatechtest.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val dao: ProductDao
+    private val productRepository: ProductRepository
 ) : ViewModel() {
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery = _searchQuery.asStateFlow()
+
     private var _products = MutableStateFlow(emptyList<Product>())
-    val products = _products.asStateFlow()
+    val products = combine(_products, _searchQuery) { productList, query ->
+        if (query.isBlank()) productList
+        else productList.filter {
+            it.name.contains(query, ignoreCase = true)
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
 
     init {
         viewModelScope.launch {
-            dao.getAllItems().collect {
-                _products.value = it.map { product ->
-                    Product(
-                        id = product.id,
-                        name = product.name,
-                        price = product.price,
-                        stock = product.stock,
-                        isFavorite = product.isFavorite
-                    )
-                }
+            productRepository.getAllProducts().collect {
+                _products.value = it
             }
         }
     }
 
+    fun onSearchQueryChanged(query: String) {
+        _searchQuery.value = query
+    }
+
     fun favoriteItem(product: Product) {
         viewModelScope.launch {
-            dao.updateItem(
-                ProductEntity(
-                    id = product.id,
-                    name = product.name,
-                    price = product.price,
-                    stock = product.stock,
-                    isFavorite = !product.isFavorite
-                )
-            )
+            productRepository.updateProduct(product.copy(isFavorite = !product.isFavorite))
         }
     }
 }
