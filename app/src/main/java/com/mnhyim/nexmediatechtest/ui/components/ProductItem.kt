@@ -21,9 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.mnhyim.nexmediatechtest.R
 import com.mnhyim.nexmediatechtest.domain.model.Product
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun ProductItem(
@@ -50,6 +53,7 @@ fun ProductItem(
             ) {
                 Icon(
                     imageVector = if (product.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    tint = if (product.isFavorite) Color.Red else Color.Gray,
                     contentDescription = ""
                 )
             }
@@ -57,21 +61,35 @@ fun ProductItem(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp, 8.dp)
+                .padding(8.dp)
         ) {
             Text(
                 text = product.name,
-                style = MaterialTheme.typography.labelSmall
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                style = MaterialTheme.typography.labelSmall,
             )
             Text(
-                text = "${product.price}",
-                style = MaterialTheme.typography.titleSmall
+                text = "Rp${formatWithCommas(product.price.toString())}",
+                maxLines = 1,
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.padding(vertical = 4.dp)
             )
             Text(
-                text = "${product.stock} stock",
+                text = "${product.stock} item left",
+                maxLines = 1,
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.Gray
             )
         }
+    }
+}
+
+fun formatWithCommas(input: String): String {
+    return try {
+        val number = input.toLong()
+        NumberFormat.getNumberInstance(Locale.getDefault()).format(number)
+    } catch (e: NumberFormatException) {
+        input
     }
 }

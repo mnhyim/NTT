@@ -1,6 +1,5 @@
 package com.mnhyim.nexmediatechtest.ui.feature.favorites
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,15 +52,12 @@ private fun FavoritesScreen(
     Box(
         modifier = modifier
     ) {
-        AnimatedVisibility(
-            visible = products.isEmpty(),
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(horizontal = 24.dp)
-        ) {
+        if (products.isEmpty()) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(horizontal = 24.dp)
                     .background(
                         MaterialTheme.colorScheme.surfaceContainerHigh,
                         RoundedCornerShape(16.dp)
@@ -85,6 +81,7 @@ private fun FavoritesScreen(
                 )
             }
         }
+
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -99,5 +96,6 @@ private fun FavoritesScreen(
                 )
             }
         }
+
     }
 }
