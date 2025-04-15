@@ -60,4 +60,5 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.8.9")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.7.8")
 }
