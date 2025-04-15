@@ -1,5 +1,6 @@
 package com.mnhyim.nexmediatechtest.data.repository
 
+import android.net.Uri
 import com.mnhyim.nexmediatechtest.data.dao.ProductDao
 import com.mnhyim.nexmediatechtest.data.entity.ProductEntity
 import com.mnhyim.nexmediatechtest.domain.model.Product
@@ -7,6 +8,7 @@ import com.mnhyim.nexmediatechtest.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 class ProductRepositoryImpl @Inject constructor(
     private val dao: ProductDao
@@ -20,7 +22,8 @@ class ProductRepositoryImpl @Inject constructor(
                     name = product.name,
                     price = product.price,
                     stock = product.stock,
-                    isFavorite = product.isFavorite
+                    imageUri = product.imageUri.toUri(),
+                    isFavorite = product.isFavorite,
                 )
             }
         }
@@ -34,6 +37,7 @@ class ProductRepositoryImpl @Inject constructor(
                     name = product.name,
                     price = product.price,
                     stock = product.stock,
+                    imageUri = product.imageUri.toUri(),
                     isFavorite = product.isFavorite
                 )
             }
@@ -46,6 +50,7 @@ class ProductRepositoryImpl @Inject constructor(
                 name = product.name,
                 price = product.price,
                 stock = product.stock,
+                imageUri = product.imageUri.toString(),
                 isFavorite = product.isFavorite
             )
         )
@@ -58,6 +63,7 @@ class ProductRepositoryImpl @Inject constructor(
                 name = product.name,
                 price = product.price,
                 stock = product.stock,
+                imageUri = product.imageUri.toString(),
                 isFavorite = product.isFavorite
             )
         )
@@ -70,6 +76,7 @@ class ProductRepositoryImpl @Inject constructor(
                 name = product.name,
                 price = product.price,
                 stock = product.stock,
+                imageUri = product.imageUri.toString(),
                 isFavorite = product.isFavorite
             )
         )

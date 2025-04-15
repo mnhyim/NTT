@@ -7,18 +7,21 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "product")
 data class ProductEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "item_id")
+    @ColumnInfo(name = "product_id")
     val id: Long = 0,
 
-    @ColumnInfo(name = "item_name")
+    @ColumnInfo(name = "product_name")
     val name: String,
 
-    @ColumnInfo(name = "item_price")
-    val price: Int,
+    @ColumnInfo(name = "product_price")
+    val price: Long,
 
-    @ColumnInfo(name = "item_stock")
+    @ColumnInfo(name = "product_stock")
     val stock: Int,
 
-    @ColumnInfo(name = "is_favorite")
+    @ColumnInfo(name = "product_imageUri")
+    val imageUri: String,
+
+    @ColumnInfo(name = "product_isFavorite")
     val isFavorite: Boolean
 )
