@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
@@ -52,7 +53,7 @@ fun Settings(
         },
         modifier = modifier
             .verticalScroll(scrollState)
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
     )
 }
 
@@ -78,11 +79,14 @@ private fun SettingsScreen(
             }
         }
 
-    Column(modifier = modifier) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
         Text(
-            text = "Add New Product",
+            text = "Settings",
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(16.dp)
         )
         OutlinedTextField(
             value = productName,

@@ -1,6 +1,6 @@
 package com.mnhyim.nexmediatechtest.data.repository
 
-import android.net.Uri
+import androidx.core.net.toUri
 import com.mnhyim.nexmediatechtest.data.dao.ProductDao
 import com.mnhyim.nexmediatechtest.data.entity.ProductEntity
 import com.mnhyim.nexmediatechtest.domain.model.Product
@@ -8,7 +8,6 @@ import com.mnhyim.nexmediatechtest.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import androidx.core.net.toUri
 
 class ProductRepositoryImpl @Inject constructor(
     private val dao: ProductDao
