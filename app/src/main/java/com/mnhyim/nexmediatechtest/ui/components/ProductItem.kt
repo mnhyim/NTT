@@ -48,7 +48,7 @@ fun ProductItem(
                 painter = rememberAsyncImagePainter(
                     model = product.imageUri,
                     error = painterResource(R.drawable.placeholder),
-                    fallback = painterResource(R.drawable.placeholder) // for null models
+                    fallback = painterResource(R.drawable.placeholder)
                 ),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,

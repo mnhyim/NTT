@@ -43,6 +43,19 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getProductById(id: Long): Product {
+        return dao.getItemById(id).let { product ->
+            Product(
+                id = product.id,
+                name = product.name,
+                price = product.price,
+                stock = product.stock,
+                imageUri = product.imageUri.toUri(),
+                isFavorite = product.isFavorite
+            )
+        }
+    }
+
     override suspend fun insertProduct(product: Product) {
         dao.insertItem(
             ProductEntity(

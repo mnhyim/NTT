@@ -7,6 +7,7 @@ import com.mnhyim.nexmediatechtest.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -22,15 +23,19 @@ class HomeViewModel @Inject constructor(
     val searchQuery = _searchQuery.asStateFlow()
 
     private var _products = MutableStateFlow(emptyList<Product>())
-    val products = combine(_products, _searchQuery) { productList, query ->
-        if (query.isBlank()) productList
-        else productList.filter {
-            it.name.contains(query, ignoreCase = true)
+    val uiState: StateFlow<HomeUiState> = combine(_products, _searchQuery) { products, query ->
+        val filtered = if (query.isBlank()) products
+        else products.filter { it.name.contains(query, ignoreCase = true) }
+
+        when {
+            products.isEmpty() -> HomeUiState.Loading
+            filtered.isEmpty() -> HomeUiState.Empty
+            else -> HomeUiState.Success(filtered)
         }
     }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        initialValue = HomeUiState.Loading
     )
 
     init {
